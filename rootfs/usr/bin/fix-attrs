@@ -10,8 +10,8 @@ backtick -n envuidgid_opts
 }
 importas -u envuidgid_opts envuidgid_opts
 foreground { s6-envuidgid ${envuidgid_opts} ${account} s6-chown -U -- ${1} }
+if -t { s6-test -n ${6} }
 {
-  if { s6-test -n ${6} }
   if { s6-${6} }
   s6-mkdir -p ${1}
 }
@@ -36,7 +36,7 @@ s6-chmod ${4} ${1}"
 forstdin -d"\n" -- line
 importas -u line line
 if { s6-test -n ${line} }
-multidefine -0 -Cd" \t" -- ${line} { globex recurse user fmode dmode }
+multidefine -0 -Cd" \t" -- ${line} { globex recurse user fmode dmode isdir }
 elglob -0 -- files ${globex}
 forx -p -- file { ${files} }
 multisubstitute
@@ -44,4 +44,4 @@ multisubstitute
   importas -u file file
   importas recfunction recfunction
 }
-execlineb -S5 -c ${recfunction} ${file} ${recurse} ${user} ${fmode} ${dmode}
+execlineb -S5 -c ${recfunction} ${file} ${recurse} ${user} ${fmode} ${dmode} ${isdir}
