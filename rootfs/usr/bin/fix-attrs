@@ -1,4 +1,4 @@
-#!/bin/execlineb -P
+#!/usr/bin/execlineb -P
 
 /bin/export PATH /usr/bin:/bin
 /bin/export recfunction "\
