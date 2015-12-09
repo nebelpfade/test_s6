@@ -10,7 +10,14 @@ backtick -n envuidgid_opts
 }
 importas -u envuidgid_opts envuidgid_opts
 foreground { s6-envuidgid ${envuidgid_opts} ${account} s6-chown -U -- ${1} }
-if { s6-test -n ${6} } { /usr/bin/if { s6-${6} } s6-mkdir -p ${1} }
+if -t { s6-test -n ${6} }
+{
+  foreground
+  {
+    if { s6-${6} }
+    s6-mkdir -p ${1}
+  }
+}
 ifelse -- { if { s6-${2} } s6-test -d ${1} }
 {
   foreground
