@@ -2,7 +2,7 @@
 
 /usr/bin/export PATH /usr/bin:/bin
 /usr/bin/export recfunction "\
-s6-echo ${6}
+s6-echo ${1} ${6}
 if -t { s6-test ${6} = "true" } s6-mkdir -p ${1}
 multidefine -Cd"," -- ${3} { account uidgid }
 backtick -n envuidgid_opts
